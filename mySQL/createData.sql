@@ -188,3 +188,36 @@ INSERT INTO foods (food_name, type_id, price, image, description) VALUES
 ('Peking Duck', 6, 25, 'http://example.com/images/peking_duck.jpg', 'Crispy duck with hoisin sauce and pancakes.'),
 ('Brownie Sundae', 5, 7, 'http://example.com/images/brownie_sundae.jpg', 'Warm brownie with ice cream and chocolate sauce.');
 
+CREATE TABLE orders(
+     orders_id INT PRIMARY KEY AUTO_INCREMENT,
+     food_id INT,
+     FOREIGN KEY(food_id) REFERENCES foods(food_id),
+     
+     user_id INT,
+     FOREIGN KEY(user_id) REFERENCES users(user_id),
+     
+     amount INT,
+     arr_sub_id VARCHAR(255)
+)
+
+INSERT INTO orders (food_id, user_id, amount, arr_sub_id) VALUES
+(1, 1, 2, 'SUB123'),
+(2, 1, 1, 'SUB124'),
+(3, 2, 3, 'SUB125'),
+(4, 2, 1, 'SUB126'),
+(5, 3, 2, 'SUB127'),
+(6, 3, 1, 'SUB128'),
+(7, 4, 2, 'SUB129'),
+(8, 4, 1, 'SUB130'),
+(9, 5, 3, 'SUB131'),
+(10, 5, 1, 'SUB132'),
+(1, 6, 2, 'SUB133'),
+(2, 6, 1, 'SUB134'),
+(3, 7, 3, 'SUB135'),
+(4, 7, 2, 'SUB136'),
+(5, 8, 1, 'SUB137'),
+(6, 8, 2, 'SUB138'),
+(7, 9, 1, 'SUB139'),
+(8, 9, 3, 'SUB140'),
+(9, 10, 2, 'SUB141'),
+(10, 10, 1, 'SUB142');
