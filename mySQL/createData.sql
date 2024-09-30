@@ -85,7 +85,7 @@ INSERT INTO food_type (type_name) VALUES
 ('Mediterranean'),
 ('German');
 
--- Tạo table rate_res, like_res, foods
+-- Tạo table rate_res, like_res, foods, orders
 CREATE TABLE rate_res(
      rate_res_id INT PRIMARY KEY AUTO_INCREMENT,
      
@@ -187,3 +187,4 @@ INSERT INTO foods (food_name, type_id, price, image, description) VALUES
 ('Falafel Wrap', 4, 10, 'http://example.com/images/falafel_wrap.jpg', 'Falafel in a wrap with hummus and veggies.'),
 ('Peking Duck', 6, 25, 'http://example.com/images/peking_duck.jpg', 'Crispy duck with hoisin sauce and pancakes.'),
 ('Brownie Sundae', 5, 7, 'http://example.com/images/brownie_sundae.jpg', 'Warm brownie with ice cream and chocolate sauce.');
+
