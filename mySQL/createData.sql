@@ -102,7 +102,7 @@ CREATE TABLE rate_res(
 
 INSERT INTO rate_res (user_id, res_id, amount, date_rate) VALUES
 (1, 1, 4, '2023-09-01'),
-(2, 1, 5, '2023-09-02'),
+(7, 1, 5, '2023-09-02'),
 (3, 2, 3, '2023-09-03'),
 (4, 2, 4, '2023-09-04'),
 (5, 3, 5, '2023-09-05'),
@@ -134,8 +134,8 @@ CREATE TABLE like_res(
 )
 
 INSERT INTO like_res (user_id, res_id, date_like) VALUES
-(1, 1, '2023-09-01'),
-(5, 1, '2023-09-02'),
+(1, 3, '2023-09-01'),
+(5, 5, '2023-09-02'),
 (7, 2, '2023-09-03'),
 (10, 2, '2023-09-04'),
 (8, 3, '2023-09-05'),
@@ -203,12 +203,12 @@ CREATE TABLE orders(
 INSERT INTO orders (food_id, user_id, amount, arr_sub_id) VALUES
 (1, 1, 2, 'SUB123'),
 (2, 1, 1, 'SUB124'),
-(3, 2, 3, 'SUB125'),
-(4, 2, 1, 'SUB126'),
+(3, 6, 3, 'SUB125'),
+(4, 7, 1, 'SUB126'),
 (5, 3, 2, 'SUB127'),
 (6, 3, 1, 'SUB128'),
 (7, 4, 2, 'SUB129'),
-(8, 4, 1, 'SUB130'),
+(8, 8, 1, 'SUB130'),
 (9, 5, 3, 'SUB131'),
 (10, 5, 1, 'SUB132'),
 (1, 6, 2, 'SUB133'),
@@ -221,3 +221,35 @@ INSERT INTO orders (food_id, user_id, amount, arr_sub_id) VALUES
 (8, 9, 3, 'SUB140'),
 (9, 10, 2, 'SUB141'),
 (10, 10, 1, 'SUB142');
+
+--Tìm 5 người like nhà hàng nhiều nhất
+SELECT COUNT(u.user_id) AS 'số like', u.user_id, u.full_name FROM users u
+INNER JOIN like_res lr ON u.user_id = lr.user_id
+GROUP BY u.user_id, u.full_name
+order by COUNT(u.user_id) DESC
+LIMIT 5
+
+-- Tìm 2 nhà hàng có lượt like nhiều nhất
+SELECT COUNT(r.res_id) AS 'số like', r.res_id, r.res_name FROM restaurant r
+INNER JOIN like_res lr ON r.res_id = lr.res_id
+GROUP by r.res_id, r.res_name
+order by COUNT(r.res_id) DESC
+LIMIT 2
+
+-- Tìm người đã đặt hàng nhiều nhất
+SELECT COUNT(u.user_id) AS 'lượt order', u.user_id, u.full_name FROM users u
+INNER JOIN orders o ON u.user_id = o.user_id
+GROUP BY u.user_id, u.full_name
+order by COUNT(u.user_id) DESC
+LIMIT 1
+
+-- Tìm người dùng không hoạt động trong hệ thống (kg đặt hàng, kg like, kg đánh giá)
+SELECT u.user_id, u.full_name
+FROM users u
+LEFT JOIN orders o ON u.user_id = o.user_id
+LEFT JOIN like_res lr ON u.user_id = lr.user_id
+LEFT JOIN rate_res rr ON u.user_id = rr.user_id
+WHERE o.user_id IS NULL
+  AND lr.user_id IS NULL
+  AND rr.user_id IS NULL;
+
