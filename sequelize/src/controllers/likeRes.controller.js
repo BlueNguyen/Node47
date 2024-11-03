@@ -33,12 +33,13 @@ const likeResByUserId = async (req, res) => {
 
 const likeRes = async (req, res) => {
   try {
+    console.log(req.body)
     let { user_id, res_id } = req.body || {};
 
     if (!user_id || !res_id) {
       return res
         .status(400)
-        .json({ message: "Thiếu user_id hoặc res_id trong body" });
+        .json({ message: "error" });
     }
 
     // Kiểm tra nếu đã có like từ user này cho nhà hàng này chưa
@@ -73,16 +74,16 @@ const likeRes = async (req, res) => {
 const dislikeRes = async (req, res) => {
   try {
     // Lấy user_id và res_id từ params hoặc body
-    const { user_id, res_id } = req.body;
+    let { user_id, res_id } = req.body || {};
 
     if (!user_id || !res_id) {
       return res
         .status(400)
-        .json({ message: "Thiếu user_id hoặc res_id trong body" });
+        .json({ message: "error when unlike restaurant" });
     }
 
     // Kiểm tra xem bản ghi like có tồn tại không
-    const existingLike = await model.rate_res.findOne({
+    let existingLike = await model.rate_res.findOne({
       where: {
         user_id,
         res_id,
@@ -104,7 +105,7 @@ const dislikeRes = async (req, res) => {
     });
 
     return res.status(200).json({
-      message: "Dislike created!",
+      message: "Dislike finished!",
     });
   } catch (error) {
     console.error("error when dislike restaurant:", error.message);

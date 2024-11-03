@@ -41,8 +41,7 @@ const rateRes = async (req, res) => {
     let newRating = await model.rate_res.create({
       user_id,
       res_id,
-      rating,
-      comment,
+      amount,
       date_rate: new Date(), // Thêm ngày đánh giá
     });
 
