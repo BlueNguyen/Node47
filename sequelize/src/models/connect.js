@@ -2,7 +2,7 @@ import {Sequelize} from 'sequelize';
 
 // tạo object sequelize để connect tới database
 const sequelize = new Sequelize(
-    "app_food", // tên database
+    "nodeJS47", // tên database
     "root", // tên username
     "123456", // password của user
     {
