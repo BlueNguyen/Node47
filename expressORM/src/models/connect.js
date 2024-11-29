@@ -1,3 +1,7 @@
+
+
+
+// yarn add sequelize
 import { Sequelize } from "sequelize";
 import config from "../config/config.js";
 
@@ -7,24 +11,25 @@ const sequelize = new Sequelize(
   config.db_pass,
   {
     host: config.db_host,
-    dialect: config.db_dialect,
-    port: config.db_port,
-    logging: false, // Tắt logging (tùy chọn)
+    dialect: config.db_dialect, // mysql
+    port: config.db_port, // 3307
+    logging: console.log, // Bật logging để kiểm tra
   }
 );
 
-// Test kết nối
+// Kiểm tra kết nối
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Connect data sucessfully!");
+    console.log("Database connection established successfully!");
   })
   .catch((err) => {
-    console.error("Error when connect data:", err);
+    console.error("Error connecting to the database: ", err);
   });
 
 export default sequelize;
 
-// yarn add sequelize
+
 // yarn add sequelize-auto
-// npx sequelize-auto -h localhost -d node47_youtube -u root -x 123456 -p 3307 --dialect mysql -o src/models -l esm
+
+// yarn sequelize-auto -h localhost -d db_node41_food -u root -x 1234 -p 3306 --dialect mysql -o src/models -l esm

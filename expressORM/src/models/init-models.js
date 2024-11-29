@@ -1,50 +1,33 @@
 import _sequelize from "sequelize";
 const DataTypes = _sequelize.DataTypes;
-import _chat from  "./chat.js";
-import _code from  "./code.js";
-import _permission from  "./permission.js";
-import _role from  "./role.js";
-import _users from  "./users.js";
-import _video from  "./video.js";
-import _video_comment from  "./video_comment.js";
-import _video_like from  "./video_like.js";
-import _video_type from  "./video_type.js";
+import _binh_luan from  "./binh_luan.js";
+import _hinh_anh from  "./hinh_anh.js";
+import _luu_anh from  "./luu_anh.js";
+import _nguoi_dung from  "./nguoi_dung.js";
 
 export default function initModels(sequelize) {
-  const chat = _chat.init(sequelize, DataTypes);
-  const code = _code.init(sequelize, DataTypes);
-  const permission = _permission.init(sequelize, DataTypes);
-  const role = _role.init(sequelize, DataTypes);
-  const users = _users.init(sequelize, DataTypes);
-  const video = _video.init(sequelize, DataTypes);
-  const video_comment = _video_comment.init(sequelize, DataTypes);
-  const video_like = _video_like.init(sequelize, DataTypes);
-  const video_type = _video_type.init(sequelize, DataTypes);
+  const binh_luan = _binh_luan.init(sequelize, DataTypes);
+  const hinh_anh = _hinh_anh.init(sequelize, DataTypes);
+  const luu_anh = _luu_anh.init(sequelize, DataTypes);
+  const nguoi_dung = _nguoi_dung.init(sequelize, DataTypes);
 
-  users.belongsTo(role, { as: "role", foreignKey: "role_id"});
-  role.hasMany(users, { as: "users", foreignKey: "role_id"});
-  video.belongsTo(users, { as: "user", foreignKey: "user_id"});
-  users.hasMany(video, { as: "videos", foreignKey: "user_id"});
-  video_comment.belongsTo(users, { as: "user", foreignKey: "user_id"});
-  users.hasMany(video_comment, { as: "video_comments", foreignKey: "user_id"});
-  video_like.belongsTo(users, { as: "user", foreignKey: "user_id"});
-  users.hasMany(video_like, { as: "video_likes", foreignKey: "user_id"});
-  video_comment.belongsTo(video, { as: "video", foreignKey: "video_id"});
-  video.hasMany(video_comment, { as: "video_comments", foreignKey: "video_id"});
-  video_like.belongsTo(video, { as: "video", foreignKey: "video_id"});
-  video.hasMany(video_like, { as: "video_likes", foreignKey: "video_id"});
-  video.belongsTo(video_type, { as: "type", foreignKey: "type_id"});
-  video_type.hasMany(video, { as: "videos", foreignKey: "type_id"});
+  hinh_anh.belongsToMany(nguoi_dung, { as: 'nguoi_dung_id_nguoi_dungs', through: luu_anh, foreignKey: "hinh_id", otherKey: "nguoi_dung_id" });
+  nguoi_dung.belongsToMany(hinh_anh, { as: 'hinh_id_hinh_anhs', through: luu_anh, foreignKey: "nguoi_dung_id", otherKey: "hinh_id" });
+  binh_luan.belongsTo(hinh_anh, { as: "hinh", foreignKey: "hinh_id"});
+  hinh_anh.hasMany(binh_luan, { as: "binh_luans", foreignKey: "hinh_id"});
+  luu_anh.belongsTo(hinh_anh, { as: "hinh", foreignKey: "hinh_id"});
+  hinh_anh.hasMany(luu_anh, { as: "luu_anhs", foreignKey: "hinh_id"});
+  binh_luan.belongsTo(nguoi_dung, { as: "nguoi_dung", foreignKey: "nguoi_dung_id"});
+  nguoi_dung.hasMany(binh_luan, { as: "binh_luans", foreignKey: "nguoi_dung_id"});
+  hinh_anh.belongsTo(nguoi_dung, { as: "nguoi_dung", foreignKey: "nguoi_dung_id"});
+  nguoi_dung.hasMany(hinh_anh, { as: "hinh_anhs", foreignKey: "nguoi_dung_id"});
+  luu_anh.belongsTo(nguoi_dung, { as: "nguoi_dung", foreignKey: "nguoi_dung_id"});
+  nguoi_dung.hasMany(luu_anh, { as: "luu_anhs", foreignKey: "nguoi_dung_id"});
 
   return {
-    chat,
-    code,
-    permission,
-    role,
-    users,
-    video,
-    video_comment,
-    video_like,
-    video_type,
+    binh_luan,
+    hinh_anh,
+    luu_anh,
+    nguoi_dung,
   };
 }
