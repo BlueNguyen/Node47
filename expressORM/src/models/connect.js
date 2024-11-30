@@ -29,6 +29,15 @@ sequelize
 
 export default sequelize;
 
+(async () => {
+  try {
+    // Đồng bộ cơ sở dữ liệu (force: true sẽ xóa bảng cũ)
+    await sequelize.sync({ force: true }); // Hoặc { alter: true }
+    console.log("Database synchronized successfully!");
+  } catch (err) {
+    console.error("Error synchronizing database: ", err);
+  }
+})();
 
 // yarn add sequelize-auto
 
