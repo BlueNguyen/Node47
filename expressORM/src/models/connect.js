@@ -29,16 +29,6 @@ sequelize
 
 export default sequelize;
 
-(async () => {
-  try {
-    // Đồng bộ cơ sở dữ liệu (force: true sẽ xóa bảng cũ)
-    await sequelize.sync({ force: true }); // Hoặc { alter: true }
-    console.log("Database synchronized successfully!");
-  } catch (err) {
-    console.error("Error synchronizing database: ", err);
-  }
-})();
-
 // yarn add sequelize-auto
 
-// yarn sequelize-auto -h localhost -d db_node41_food -u root -x 1234 -p 3306 --dialect mysql -o src/models -l esm
+// yarn sequelize-auto -h localhost -d db_node47 -u root -x 1234 -p 3306 --dialect mysql -o src/models -l esm

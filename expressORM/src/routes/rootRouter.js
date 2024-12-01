@@ -6,8 +6,8 @@ import binhLuanRouter from "./binhLuanRouter.js";
 
 const rootRouter = express.Router();
 
-rootRouter.use("/", nguoiDungRouter);
-rootRouter.use("/", anhRouter);
-rootRouter.use("/", binhLuanRouter);
+rootRouter.use("/user", nguoiDungRouter);
+rootRouter.use("/image", anhRouter);
+rootRouter.use("/comment", binhLuanRouter);
 
 export default rootRouter;
